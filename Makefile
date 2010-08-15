@@ -1,7 +1,7 @@
 LD=g++ -lpthread -Wall
 CC=g++ -Wall
-trypthread : trypthread.o Person.o Room.o Lock.o Mutex.o Thread.o
-	$(LD) -o trypthread trypthread.o Person.o Room.o Lock.o Mutex.o Thread.o
+trypthread : trypthread.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o
+	$(LD) -o trypthread trypthread.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o
 trypthread.o : trypthread.cpp
 	$(CC) -c trypthread.cpp 
 Person.o : Person.cpp Person.h
@@ -14,5 +14,7 @@ Mutex.o : Mutex.cpp Mutex.h
 	$(CC) -c Mutex.cpp 
 Thread.o : Thread.cpp Thread.h
 	$(CC) -c Thread.cpp 
+Event.o : Event.cpp Event.h Mutex.h
+	$(CC) -c Event.cpp 
 clean :
 	rm -f trypthread *.o

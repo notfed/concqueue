@@ -10,7 +10,6 @@ Room::Room()
   : m_Finished(false),
     m_Thread(&CallRoomLoop,this)
 {
-  pthread_cond_init(&m_PersonInQueue,0);
 }
 Room::~Room()
 {
@@ -29,24 +28,19 @@ void* Room::RoomLoop()
     ptrPerson = Dequeue();
     if(ptrPerson==0) { 
       if(m_Finished) return this;
-      WaitForQueue(); 
+      m_PersonInQueue.Wait();
       continue; 
     }
     ptrPerson->SayHi();
   } 
   return this;
 }
-void Room::WaitForQueue()
-{
-  Lock queueLock(m_PersonInQueueWaitMutex);
-  pthread_cond_wait(&m_PersonInQueue,m_PersonInQueueWaitMutex);
-}
 
 void Room::Enqueue(Person* newPerson)
 {
   Lock queueLock(m_QueueLock);
   m_Queue.push(newPerson);
-  pthread_cond_signal(&m_PersonInQueue);
+  m_PersonInQueue.Signal();
 }
 Person* Room::Dequeue()
 {

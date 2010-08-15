@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Mutex.h"
 #include "Thread.h"
+#include "Event.h"
 #include <queue>
 #include <pthread.h>
 class Room
@@ -12,13 +13,8 @@ class Room
   Thread m_Thread;
   std::queue<Person*> m_Queue;
   Mutex m_QueueLock;
-
-  pthread_cond_t m_PersonInQueue;
-  Mutex m_PersonInQueueMutex;
-  Mutex m_PersonInQueueWaitMutex;
-
+  Event m_PersonInQueue;
   Person* Dequeue();
-  void WaitForQueue();
   static void* CallRoomLoop(void*);
   void* RoomLoop();
 public:
