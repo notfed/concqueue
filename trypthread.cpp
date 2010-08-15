@@ -13,6 +13,7 @@ int main()
   myRoom.Enqueue(&bob);
   myRoom.Enqueue(&chris);
   myRoom.Finish();
+  cout << "Finished." << endl;
   myRoom.Wait();
   return 0;
 }

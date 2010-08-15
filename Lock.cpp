@@ -1,12 +1,12 @@
 #include "Lock.h"
 #include <pthread.h>
 using namespace std;
-Lock::Lock(pthread_mutex_t& newMutex) 
-  : m_Mutex(newMutex)
+Lock::Lock(Mutex& newMutex) 
+  : m_Mutex(&newMutex)
 { 
-  pthread_mutex_lock(&m_Mutex);
+  m_Mutex->Lock();
 }
 Lock::~Lock()
 {
-  pthread_mutex_unlock(&m_Mutex);
+  m_Mutex->Unlock();
 }

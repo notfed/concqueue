@@ -1,11 +1,12 @@
 #ifndef LOCK_H
 #define LOCK_H
+#include "Mutex.h"
 #include <pthread.h>
 class Lock
 {
-  pthread_mutex_t& m_Mutex;
+  Mutex* const m_Mutex;
 public:  
-  Lock(pthread_mutex_t&);
-  ~Lock();
+  Lock(Mutex&);
+  virtual ~Lock();
 };
 #endif

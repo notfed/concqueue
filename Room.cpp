@@ -9,9 +9,6 @@ using namespace std;
 Room::Room()
   : m_Finished(false)
 {
-  pthread_mutex_init(&m_QueueLock,0);
-  pthread_mutex_init(&m_PersonInQueueMutex,0);
-  pthread_mutex_init(&m_PersonInQueueWaitMutex,0);
   pthread_cond_init(&m_PersonInQueue,0);
   pthread_create(&m_Thread, 0, &CallRoomLoop, this);
 }
@@ -42,7 +39,7 @@ void* Room::RoomLoop()
 void Room::WaitForQueue()
 {
   Lock queueLock(m_PersonInQueueWaitMutex);
-  pthread_cond_wait(&m_PersonInQueue,&m_PersonInQueueWaitMutex);
+  pthread_cond_wait(&m_PersonInQueue,m_PersonInQueueWaitMutex);
 }
 
 void Room::Enqueue(Person* newPerson)
