@@ -7,14 +7,14 @@
 #include <iostream>
 using namespace std;
 Room::Room()
-  : m_Finished(false)
+  : m_Finished(false),
+    m_Thread(&CallRoomLoop,this)
 {
   pthread_cond_init(&m_PersonInQueue,0);
-  pthread_create(&m_Thread, 0, &CallRoomLoop, this);
 }
 Room::~Room()
 {
-  pthread_cancel(m_Thread);
+  m_Thread.Cancel();
 }
 void* Room::CallRoomLoop(void* _this)
 {
@@ -63,5 +63,5 @@ void Room::Finish()
 void Room::Wait()
 {
   void *result;
-  pthread_join(m_Thread,&result);
+  m_Thread.Join(&result);
 }

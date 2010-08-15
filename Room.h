@@ -3,12 +3,13 @@
 #include "Person.h"
 #include "Room.h"
 #include "Mutex.h"
+#include "Thread.h"
 #include <queue>
 #include <pthread.h>
 class Room
 {
   volatile bool m_Finished;
-  pthread_t m_Thread;
+  Thread m_Thread;
   std::queue<Person*> m_Queue;
   Mutex m_QueueLock;
 
