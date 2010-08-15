@@ -8,7 +8,7 @@
 using namespace std;
 Room::Room()
   : m_Finished(false),
-    m_Thread(&CallRoomLoop,this)
+    m_Thread(&Room::CallRoomLoop,this)
 {
 }
 Room::~Room()

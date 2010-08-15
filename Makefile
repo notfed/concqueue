@@ -12,6 +12,8 @@ Lock.o : Lock.cpp Lock.h Mutex.h
 	$(CC) -c Lock.cpp 
 Mutex.o : Mutex.cpp Mutex.h
 	$(CC) -c Mutex.cpp 
+Cond.o : Cond.cpp Cond.h
+	$(CC) -c Mutex.cpp 
 Thread.o : Thread.cpp Thread.h
 	$(CC) -c Thread.cpp 
 Event.o : Event.cpp Event.h Mutex.h

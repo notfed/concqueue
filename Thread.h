@@ -6,8 +6,9 @@ class Thread
   pthread_t m_Thread;
   void Exit(void*);
 public:
-  typedef void *(*start_routine_t)(void*);
-  Thread(start_routine_t,void*);
+  typedef void *(*Start_routine_f)(void*);
+  typedef void *Start_routine_arg_t;
+  Thread(Start_routine_f,Start_routine_arg_t);
   virtual ~Thread() { }
   int Cancel();
   int Kill(int);
