@@ -6,6 +6,7 @@
 #include <pthread.h>
 class Room
 {
+  volatile bool m_Finished;
   pthread_t m_Thread;
   std::queue<Person*> m_Queue;
   pthread_mutex_t m_QueueLock;
@@ -21,7 +22,8 @@ class Room
 public:
   Room();
   ~Room();
-  void Enqueue(Person*);
-  void Wait();
+  void Enqueue(Person*); // Add a person to the queue
+  void Finish(); // Signal that no more people will be Enqueued
+  void Wait(); // Wait for room to finish handling all people currently queued
 };
 #endif

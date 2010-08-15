@@ -12,6 +12,7 @@ int main()
   myRoom.Enqueue(&aaron);
   myRoom.Enqueue(&bob);
   myRoom.Enqueue(&chris);
+  myRoom.Finish();
   myRoom.Wait();
   return 0;
 }

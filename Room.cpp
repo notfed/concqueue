@@ -7,6 +7,7 @@
 #include <iostream>
 using namespace std;
 Room::Room()
+  : m_Finished(false)
 {
   pthread_mutex_init(&m_QueueLock,0);
   pthread_mutex_init(&m_PersonInQueueMutex,0);
@@ -29,7 +30,11 @@ void* Room::RoomLoop()
   for(;;)
   {
     ptrPerson = Dequeue();
-    if(ptrPerson==0) { WaitForQueue(); continue; }
+    if(ptrPerson==0) { 
+      if(m_Finished) return this;
+      WaitForQueue(); 
+      continue; 
+    }
     ptrPerson->SayHi();
   } 
   return this;
@@ -53,6 +58,10 @@ Person* Room::Dequeue()
   Person* nextPerson = m_Queue.front();
   m_Queue.pop();
   return nextPerson;
+}
+void Room::Finish()
+{
+  m_Finished = true;
 }
 void Room::Wait()
 {
