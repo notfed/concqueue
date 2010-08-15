@@ -3,9 +3,15 @@
 #include "Lock.h"
 #include <queue>
 #include <functional>
+#include <pthread.h>
+#include <iostream>
 using namespace std;
 Room::Room()
 {
+  pthread_mutex_init(&m_QueueLock,0);
+  pthread_mutex_init(&m_PersonInQueueMutex,0);
+  pthread_mutex_init(&m_PersonInQueueWaitMutex,0);
+  pthread_cond_init(&m_PersonInQueue,0);
   pthread_create(&m_Thread, 0, &CallRoomLoop, this);
 }
 Room::~Room()
