@@ -11,7 +11,7 @@ class Room
 {
   volatile bool m_Finished;
   Thread m_Thread;
-  std::queue<Person*> m_Queue;
+  std::priority_queue<Person*> m_Queue;
   Mutex m_QueueLock;
   Event m_PersonInQueue;
   Person* Dequeue();

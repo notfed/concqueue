@@ -46,7 +46,7 @@ Person* Room::Dequeue()
 {
   Lock queueLock(m_QueueLock);
   if(m_Queue.empty()) return 0;
-  Person* nextPerson = m_Queue.front();
+  Person* nextPerson = m_Queue.top();
   m_Queue.pop();
   return nextPerson;
 }

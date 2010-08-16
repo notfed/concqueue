@@ -1,27 +1,15 @@
 #include "Cond.h"
-#include "Time.h"
+#include "Mutex.h"
+#include "DateTime.h"
+#include <pthread.h>
 
-Cond::Cond()
+int Cond::TimedWait(Mutex& mutex, const DateTime& tim)
 {
-  pthread_cond_init(&m_Cond,0);
-}
-
-Cond::~Cond()
-{
-  pthread_cond_destroy(&m_Cond);
-}
-
-int Cond::TimedWait(Time& time, Mutex&, mutex, Time& time)
-{
-  return pthread_timedwait(*this,mutex,time);
+  struct timespec tmpTime(tim);
+  return pthread_cond_timedwait(&m_Cond,mutex,&tmpTime);
 }
 
 int Cond::Wait(Mutex& mutex)
 {
-  return pthread_cond_wait(m_Cond,mutex);
-}
-
-Cond::operator pthread_cond_t*()
-{
-  return &m_Cond;
+  return pthread_cond_wait(&m_Cond,mutex);
 }
