@@ -1,0 +1,3 @@
+This program manages a priority queue of events, sorted by the deadline of each event, in an optimized, efficient manner.
+
+See test.cpp for usage information.
