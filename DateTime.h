@@ -1,6 +1,7 @@
 #ifndef DATETIME_H
 #define DATETIME_H
 #include "TimeSpan.h"
+#include <ostream>
 #include <time.h>
 typedef struct tm tm_t;
 typedef struct timespec timespec_t;
@@ -21,9 +22,12 @@ public:
                         minuend.ToTimeT())), 0); 
   }
   inline friend bool operator< (DateTime& left, DateTime& right) 
-  { 
-      return (difftime(left,right) < 0);
-  }
+  { return (difftime(left,right) < 0); }
+  inline friend bool operator<= (DateTime& left, DateTime& right) 
+  { return left==right || left<right; }
+  inline friend bool operator>= (DateTime& left, DateTime& right) 
+  { return left==right || left>right; }
+  inline friend bool operator> (DateTime& left, DateTime& right) { return !(left<right); }
       
 };
 #endif
