@@ -13,4 +13,10 @@ public:
   inline friend bool operator<(Person& pa,Person& pb)
   { return pa.m_Deadline < pb.m_Deadline; }
 };
+class Person_ptr_cmp
+{
+public:
+  inline bool operator()(const Person* pa, const Person* pb)
+  { return pa->Deadline() >= pb->Deadline(); } 
+};
 #endif
