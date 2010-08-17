@@ -7,6 +7,7 @@ class Person
   std::string m_Name;
   DateTime m_Deadline;
 public:
+  const DateTime& Deadline() const { return m_Deadline; }
   Person(const char *name, const DateTime& deadline);
   void SayHi() const;
   inline friend bool operator<(Person& pa,Person& pb)
