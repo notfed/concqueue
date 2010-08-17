@@ -1,3 +1,5 @@
 This program manages a priority queue of events, sorted by the deadline of each event, in an optimized, efficient manner.
 
+Uses pthreads, and C++ STL.
+
 See test.cpp for usage information.
