@@ -7,6 +7,12 @@
 #include "Event.h"
 #include <queue>
 #include <pthread.h>
+template <class T>
+void* CallRoomLoop(void* t)
+{
+  T* theRoom = reinterpret_cast<T*>(t);
+  return theRoom->RoomLoop();
+}
 class Room
 {
   volatile bool m_Finished;
@@ -15,8 +21,8 @@ class Room
   Mutex m_QueueLock;
   Event m_PersonInQueue;
   Person* Dequeue();
-  static void* CallRoomLoop(void*);
   void* RoomLoop();
+  friend void* CallRoomLoop<Room>(void*);
 public:
   Room();
   ~Room();

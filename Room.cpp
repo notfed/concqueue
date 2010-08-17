@@ -8,17 +8,12 @@
 using namespace std;
 Room::Room()
   : m_Finished(false),
-    m_Thread(&Room::CallRoomLoop,this)
+    m_Thread(&CallRoomLoop<Room>,this)
 {
 }
 Room::~Room()
 {
   m_Thread.Cancel();
-}
-void* Room::CallRoomLoop(void* _this)
-{
-  Room *theRoom = reinterpret_cast<Room*>(_this);
-  return theRoom->RoomLoop();
 }
 void* Room::RoomLoop()
 {
