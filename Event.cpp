@@ -26,3 +26,9 @@ int Event::Wait()
 {
   return pthread_cond_wait(m_Cond,m_Mutex);
 }
+
+int Event::Wait(DateTime deadline)
+{
+  struct timespec t = deadline;
+  return pthread_cond_timedwait(m_Cond,m_Mutex,&t);
+}

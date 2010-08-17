@@ -2,6 +2,7 @@
 #define EVENT_H
 #include "Mutex.h"
 #include "Cond.h"
+#include "DateTime.h"
 #include <pthread.h>
 class Event
 {
@@ -13,5 +14,6 @@ public:
   int Signal();
   int Broadcast();
   int Wait();
+  int Wait(DateTime);
 };
 #endif
