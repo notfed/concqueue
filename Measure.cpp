@@ -6,5 +6,5 @@ Measure::~Measure()
 {
   if(!m_Name.empty()) cerr << m_Name << " took ";
   else cerr << " Took ";
-  cerr << TimeSpan(DateTime::Now() - m_StartTime);
+  cerr << TimeSpan(DateTime::Now() - m_StartTime).Milliseconds() << " milliseconds." << endl;
 }
