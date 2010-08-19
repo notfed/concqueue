@@ -9,12 +9,6 @@
 #include <queue>
 #include <pthread.h>
 #include <vector>
-template <class T>
-void* CallRoomLoop(void* t)
-{
-  T* theRoom = reinterpret_cast<T*>(t);
-  return theRoom->RoomLoop();
-}
 class Room
 {
   volatile bool m_Finished;
@@ -25,7 +19,6 @@ class Room
   Person* Dequeue();
   Person* TryDequeue(TimeSpan*);
   void* RoomLoop();
-  friend void* CallRoomLoop<Room>(void*);
 public:
   Room();
   ~Room();
