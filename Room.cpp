@@ -1,6 +1,7 @@
 #include "Person.h"
 #include "Room.h"
 #include "Lock.h"
+#include "MemFun.h"
 #include <queue>
 #include <functional>
 #include <pthread.h>
@@ -8,7 +9,7 @@
 using namespace std;
 Room::Room()
   : m_Finished(false),
-    m_Thread(&CallRoomLoop<Room>,this)
+    m_Thread(&CallMemFun<Room,&Room::RoomLoop>,this)
 {
 }
 Room::~Room()
@@ -76,3 +77,4 @@ void Room::Wait()
   void *result;
   m_Thread.Join(&result);
 }
+
