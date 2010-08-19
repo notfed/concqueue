@@ -1,6 +1,7 @@
 #ifndef TIMESPAN_H
 #define TIMESPAN_H
 #include <time.h>
+#include <ostream>
 typedef struct timespec timespec_t;
 class TimeSpan;
 class TimeSpan
@@ -11,7 +12,12 @@ public:
   inline TimeSpan(timespec_t& timespec) { m_Timespec = timespec; }
   inline TimeSpan(int secs, int nsecs) 
     { m_Timespec.tv_sec = secs;  m_Timespec.tv_nsec = nsecs; }
-  inline time_t Seconds() const { return m_Timespec.tv_sec; }
+  inline double Milliseconds() const { 
+    return static_cast<double>(m_Timespec.tv_sec)/1000 +
+           static_cast<double>(m_Timespec.tv_nsec)*1000; }
+  inline double Seconds() const { 
+    return static_cast<double>(m_Timespec.tv_sec)+
+           static_cast<double>(m_Timespec.tv_nsec)*1E6; }
   inline operator timespec_t&() { return m_Timespec; }
   inline TimeSpan operator+(TimeSpan& addend) { 
     timespec_t tmp = addend.m_Timespec;
@@ -54,4 +60,6 @@ public:
   }
 
 };
+std::ostream& operator<<(std::ostream& out,const TimeSpan& ts);
+
 #endif
