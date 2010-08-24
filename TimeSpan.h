@@ -12,7 +12,7 @@ public:
   TimeSpan(int secs, int nsecs); 
   double Milliseconds() const; 
   double Seconds() const;
-  operator timespec_t&();
+  operator const timespec_t&();
   TimeSpan operator+(const timespec_t& addend) const;
   TimeSpan operator+(const TimeSpan& addend) const;
   TimeSpan operator-() const;
@@ -42,7 +42,7 @@ inline double TimeSpan::Seconds() const
     return static_cast<double>(m_Timespec.tv_sec)+
            static_cast<double>(m_Timespec.tv_nsec)*1000000; 
 }
-inline TimeSpan::operator timespec_t&() 
+inline TimeSpan::operator const timespec_t&() 
 { return m_Timespec; }
 inline TimeSpan TimeSpan::operator+(const timespec_t& addend) const { 
     TimeSpan newTime(addend);
