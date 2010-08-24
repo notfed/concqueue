@@ -2,14 +2,10 @@
 
 Event::Event()
 {
-  if(pthread_cond_init(m_Cond,0)!=0)
-    throw "pthread_cond_init failed!";
 }
 
 Event::~Event()
 {
-  if(pthread_cond_destroy(m_Cond)!=0)
-    throw "pthread_cond_destroy failed!";
 }
 
 int Event::Signal()
