@@ -2,4 +2,39 @@ This program manages a priority queue of events, sorted by the deadline of each 
 
 Uses pthreads, and C++ STL.
 
-See test.cpp for usage information.
+
+See test.cpp for usage example.
+
+
+Classes ::
+
+Thread
+ - Represents a thread
+
+ThreadQueue
+ - Represents a queue of deadline-based actions which runs in its own thread, where new actions may be added into the queue at any time, and elements are invoked once their deadline has expired
+
+TimeSpan
+ - Represents an exact amount of time
+
+DateTime
+ - Represents a Date and a Time
+
+Event
+ - Represents a waitable event
+
+Cond
+ - Represents a waitable condition
+
+Mutex
+ - Represents a mutually exclusive lock
+
+
+Lock
+ - Use to exclusively lock a Mutex
+
+ScheduledMessage
+ - Used to represent a message which should be displayed after a specified period of time
+
+test.cpp
+ - 
