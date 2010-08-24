@@ -8,7 +8,8 @@ Event::Event()
 
 Event::~Event()
 {
-  pthread_cond_destroy(m_Cond);
+  if(pthread_cond_destroy(m_Cond)!=0)
+    throw "pthread_cond_destroy failed!";
 }
 
 int Event::Signal()
