@@ -4,7 +4,7 @@
 #include <pthread.h>
 class Lock
 {
-  Mutex* const m_Mutex;
+  Mutex& m_Mutex;
 public:  
   Lock(Mutex&);
   virtual ~Lock();
