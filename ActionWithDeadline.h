@@ -8,7 +8,7 @@ class ActionWithDeadline
 public:
   typedef struct {
     bool operator()(const ActionWithDeadline* pa, const ActionWithDeadline* pb)
-    { return pa->Deadline() >= pb->Deadline(); } 
+    { return !(*pa < *pb); } 
   } PtrCompareType;
   ActionWithDeadline(const DateTime& deadline);
   const DateTime& Deadline() const;
