@@ -3,11 +3,14 @@
 #include "DateTime.h"
 #include <string>
 template <class A>
+class ActionWithDeadline_ptr_cmp;
+template <class A>
 class ActionWithDeadline
 {
-  A m_Action;
+  const A& m_Action;
   DateTime m_Deadline;
 public:
+  typedef ActionWithDeadline_ptr_cmp<A> PtrCompareType;
   const DateTime& Deadline() const { return m_Deadline; }
   ActionWithDeadline(const A& action, const DateTime& deadline);
   void Invoke();
@@ -21,4 +24,16 @@ public:
   inline bool operator()(const ActionWithDeadline<A>* pa, const ActionWithDeadline<A>* pb)
   { return pa->Deadline() >= pb->Deadline(); } 
 };
+
+template <class A>
+ActionWithDeadline<A>::ActionWithDeadline(const A& action, const DateTime& deadline) 
+    : m_Action(action),
+      m_Deadline(deadline)
+{ }
+
+template <class A>
+void ActionWithDeadline<A>::Invoke()
+{
+  m_Action();
+}
 #endif

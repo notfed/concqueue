@@ -1,7 +1,7 @@
 LD=g++ -lpthread -Wall
 CC=g++ -Wall
-test : test.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ActionWithDeadline.o
-	$(LD) -o test test.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ActionWithDeadline.o
+test : test.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o 
+	$(LD) -o test test.o Person.o Room.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o 
 test.o : test.cpp
 	$(CC) -c test.cpp 
 Person.o : Person.cpp Person.h
@@ -22,7 +22,5 @@ DateTime.o : DateTime.cpp DateTime.h TimeSpan.h
 	$(CC) -c DateTime.cpp
 TimeSpan.o : TimeSpan.cpp TimeSpan.h
 	$(CC) -c TimeSpan.cpp
-ActionWithDeadline.o : ActionWithDeadline.cpp ActionWithDeadline.h
-	clang -c ActionWithDeadline.cpp
 clean :
 	rm -f test *.o

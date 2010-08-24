@@ -37,7 +37,7 @@ void* Room::RoomLoop()
       continue;
     }
     //cout << "Element ready. Executing. " << endl;
-    ptrPerson->SayHi();
+    (*ptrPerson)();
   } 
   return this;
 }

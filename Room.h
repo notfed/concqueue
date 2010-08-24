@@ -6,14 +6,14 @@
 #include "Thread.h"
 #include "Event.h"
 #include "DateTime.h"
+#include "ActionWithDeadline.h"
 #include <queue>
-#include <pthread.h>
 #include <vector>
 class Room
 {
   volatile bool m_Finished;
   Thread m_Thread;
-  std::priority_queue<Person*,std::vector<Person*>,Person_ptr_cmp> m_Queue;
+  std::priority_queue<Person*,std::vector<Person*>,Person::PtrCompareType> m_Queue;
   Mutex m_QueueLock;
   Event m_QueueEvent;
   Person* Dequeue();
