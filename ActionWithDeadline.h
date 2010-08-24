@@ -1,5 +1,5 @@
-#ifndef PERSON_H
-#define PERSON_H
+#ifndef ACTIONWITHDEADLINE_H
+#define ACTIONWITHDEADLINE_H 
 #include "DateTime.h"
 #include <string>
 template <class A>
@@ -9,7 +9,7 @@ class ActionWithDeadline
   DateTime m_Deadline;
 public:
   const DateTime& Deadline() const { return m_Deadline; }
-  ActionWithDeadline(const A& name, const DateTime& deadline);
+  ActionWithDeadline(const A& action, const DateTime& deadline);
   void Invoke();
   inline friend bool operator<(ActionWithDeadline& pa,ActionWithDeadline& pb)
   { return pa.m_Deadline < pb.m_Deadline; }
