@@ -7,15 +7,15 @@ class ActionWithDeadline
   DateTime m_Deadline;
 public:
   typedef struct {
-    inline bool operator()(const ActionWithDeadline* pa, const ActionWithDeadline* pb)
+    bool operator()(const ActionWithDeadline* pa, const ActionWithDeadline* pb)
     { return pa->Deadline() >= pb->Deadline(); } 
   } PtrCompareType;
-  inline friend bool operator<(const ActionWithDeadline& pa, const ActionWithDeadline& pb)
-  { return pa.m_Deadline < pb.m_Deadline; }
-  const DateTime& Deadline() const;
   ActionWithDeadline(const DateTime& deadline);
+  const DateTime& Deadline() const;
+  bool operator<(const ActionWithDeadline&) const;
   virtual void operator()() = 0;
 };
-
+inline bool ActionWithDeadline::operator<(const ActionWithDeadline& other) const
+{ return m_Deadline < other.m_Deadline; }
 
 #endif
