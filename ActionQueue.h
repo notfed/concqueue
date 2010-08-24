@@ -54,7 +54,7 @@ void* ActionQueue<E>::ActionQueueLoop()
     if(ptrElement==0) { // Queue Is Empty
       if(m_Finished) {
         //cout << "Queue is empty, finished." << endl;
-        return this;
+        break;
       }
       //cout << "Queue is empty, waiting for entries." << endl;
       m_QueueEvent.Wait();
