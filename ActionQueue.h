@@ -1,5 +1,5 @@
-#ifndef THREADQUEUE_H
-#define THREADQUEUE_H
+#ifndef ACTIONQUEUE_H
+#define ACTIONQUEUE_H
 #include "Mutex.h"
 #include "Thread.h"
 #include "Event.h"
