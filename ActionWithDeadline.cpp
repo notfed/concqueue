@@ -1,16 +1,16 @@
-#include "TimedAction.h"
+#include "ActionWithDeadline.h"
 #include <string>
 #include <iostream>
 using namespace std;
 
 template <class A>
-TimedAction<A>::TimedAction(const A& action, const DateTime& deadline) 
+ActionWithDeadline<A>::ActionWithDeadline(const A& action, const DateTime& deadline) 
     : m_Action(action),
       m_Deadline(deadline)
 { }
 
 template <class A>
-void TimedAction<A>::Invoke()
+void ActionWithDeadline<A>::Invoke()
 {
   m_Action();
 }
