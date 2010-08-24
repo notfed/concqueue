@@ -6,7 +6,7 @@ Uses pthreads, and C++ STL.
 See test.cpp for usage example.
 
 
-Classes ::
+:: Classes ::
 
 Thread
  - Represents a thread
@@ -31,6 +31,9 @@ Mutex
 
 Lock
  - Use to exclusively lock a Mutex
+
+CallMemFun
+ - Creates a function that calls a member function of some object
 
 ScheduledMessage
  - Used to represent a message which should be displayed after a specified period of time
