@@ -29,7 +29,6 @@ Cond
 Mutex
  - Represents a mutually exclusive lock
 
-
 Lock
  - Use to exclusively lock a Mutex
 
@@ -37,4 +36,4 @@ ScheduledMessage
  - Used to represent a message which should be displayed after a specified period of time
 
 test.cpp
- - 
+ - Creates a sample queue of ScheduledMessages and waits for them to complete
