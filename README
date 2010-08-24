@@ -8,8 +8,6 @@ See test.cpp for usage example.
 
 :: Classes ::
 
-Thread
- - Represents a thread
 
 ActionQueue
  - Represents a queue of deadline-based actions which runs in its own thread, where new actions may be added into the queue at any time, and actions are invoked once their deadline has expired
@@ -22,6 +20,12 @@ DateTime
 
 Event
  - Represents a waitable event
+
+Thread
+ - Represents a thread
+
+Attr
+ - Represents a thread attribute
 
 Cond
  - Represents a waitable condition
