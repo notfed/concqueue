@@ -6,12 +6,12 @@ test.o : test.cpp
 	$(CC) -c test.cpp 
 Person.o : Person.cpp Person.h
 	$(CC) -c Person.cpp 
-Room.o : Room.cpp Room.h Person.h Mutex.h
-	$(CC) -c Room.cpp 
 Lock.o : Lock.cpp Lock.h Mutex.h
 	$(CC) -c Lock.cpp 
 Mutex.o : Mutex.cpp Mutex.h
 	$(CC) -c Mutex.cpp 
+Room.o : Room.cpp Room.h Person.h Mutex.h
+	$(CC) -c Room.cpp 
 Cond.o : Cond.cpp Cond.h
 	$(CC) -c Mutex.cpp 
 Thread.o : Thread.cpp Thread.h
