@@ -27,7 +27,7 @@ class ActionQueue
 public:
   ActionQueue();
   virtual ~ActionQueue();
-  void Enqueue(E*); // Add a element to the queue
+  void Enqueue(E*); // Add an element to the queue
   void Finish(); // Signal that no more people will be Enqueued
   void Wait(); // Wait for room to finish handling all people currently queued
 };
