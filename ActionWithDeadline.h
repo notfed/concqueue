@@ -15,6 +15,8 @@ public:
   bool operator<(const ActionWithDeadline&) const;
   virtual void operator()() = 0;
 };
+inline const DateTime& ActionWithDeadline::Deadline() const 
+{ return m_Deadline; }
 inline bool ActionWithDeadline::operator<(const ActionWithDeadline& other) const
 { return m_Deadline < other.m_Deadline; }
 
