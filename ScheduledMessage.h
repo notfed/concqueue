@@ -1,5 +1,5 @@
-#ifndef PERSON_H
-#define PERSON_H
+#ifndef SCHEDULEDMESSAGE_H
+#define SCHEDULEDMESSAGE_H
 #include "DateTime.h"
 #include "ActionWithDeadline.h"
 #include <string>
