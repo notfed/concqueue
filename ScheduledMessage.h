@@ -3,7 +3,7 @@
 #include "DateTime.h"
 #include "ActionWithDeadline.h"
 #include <string>
-class ScheduledMessage : public ActionWithDeadline<ScheduledMessage>
+class ScheduledMessage : public ActionWithDeadline
 {
   std::string m_Message;
 public:

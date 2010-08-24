@@ -4,7 +4,7 @@
 using namespace std;
 
 ScheduledMessage::ScheduledMessage(const char *msg, const DateTime& deadline) 
-    : ActionWithDeadline<ScheduledMessage>(deadline),
+    : ActionWithDeadline(deadline),
       m_Message(msg)
  
 { }
