@@ -2,7 +2,7 @@
 #define DATETIME_H
 #include "TimeSpan.h"
 #include <ostream>
-#include <time.h>
+#include <ctime>
 typedef struct tm tm_t;
 typedef struct timespec timespec_t;
 class DateTime
