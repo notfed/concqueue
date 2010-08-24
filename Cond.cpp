@@ -30,3 +30,12 @@ int Cond::Wait(Mutex& mutex)
 {
   return pthread_cond_wait(&m_Cond,mutex);
 }
+
+int Cond::Signal()
+{
+  return pthread_cond_signal(&m_Cond);
+}
+int Cond::Broadcast()
+{
+  return pthread_cond_broadcast(&m_Cond);
+}

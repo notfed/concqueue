@@ -3,7 +3,6 @@
 #include "Mutex.h"
 #include "Cond.h"
 #include "DateTime.h"
-#include <pthread.h>
 class Event
 {
   Cond m_Cond;
@@ -14,6 +13,6 @@ public:
   int Signal();
   int Broadcast();
   int Wait();
-  int Wait(DateTime);
+  int Wait(const DateTime&);
 };
 #endif

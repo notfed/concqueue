@@ -16,12 +16,14 @@ Mutex::~Mutex()
 
 void Mutex::Lock()
 {
-  pthread_mutex_lock(&m_Mutex);
+  if(pthread_mutex_lock(&m_Mutex)!=0)
+    throw std::runtime_error("pthread_mutex_lock failed");
 }
 
 void Mutex::Unlock()
 {
-  pthread_mutex_unlock(&m_Mutex);
+  if(pthread_mutex_unlock(&m_Mutex)!=0)
+    throw std::runtime_error("pthread_mutex_unlock failed");
 }
 
 Mutex::operator pthread_mutex_t*()

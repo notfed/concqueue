@@ -10,21 +10,20 @@ Event::~Event()
 
 int Event::Signal()
 {
-  return pthread_cond_signal(m_Cond);
+  return m_Cond.Signal();
 }
 
 int Event::Broadcast()
 {
-  return pthread_cond_broadcast(m_Cond);
+  return m_Cond.Broadcast();
 }
 
 int Event::Wait()
 {
-  return pthread_cond_wait(m_Cond,m_Mutex);
+  return m_Cond.Wait(m_Mutex);
 }
 
-int Event::Wait(DateTime deadline)
+int Event::Wait(const DateTime& deadline)
 {
-  struct timespec t = deadline;
-  return pthread_cond_timedwait(m_Cond,m_Mutex,&t);
+  return m_Cond.TimedWait(m_Mutex,deadline);
 }
