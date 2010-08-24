@@ -13,7 +13,6 @@ public:
   typedef ActionWithDeadline_ptr_cmp<A> PtrCompareType;
   const DateTime& Deadline() const { return m_Deadline; }
   ActionWithDeadline(const A& action, const DateTime& deadline);
-  void Invoke();
   inline friend bool operator<(ActionWithDeadline& pa,ActionWithDeadline& pb)
   { return pa.m_Deadline < pb.m_Deadline; }
 };
@@ -31,9 +30,4 @@ ActionWithDeadline<A>::ActionWithDeadline(const A& action, const DateTime& deadl
       m_Deadline(deadline)
 { }
 
-template <class A>
-void ActionWithDeadline<A>::Invoke()
-{
-  m_Action();
-}
 #endif
