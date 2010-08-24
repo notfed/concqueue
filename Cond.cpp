@@ -1,7 +1,6 @@
 #include "Cond.h"
 #include "Mutex.h"
 #include "DateTime.h"
-#include <pthread.h>
 
 int Cond::TimedWait(Mutex& mutex, const DateTime& tim)
 {

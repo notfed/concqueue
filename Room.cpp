@@ -2,9 +2,9 @@
 #include "Room.h"
 #include "Lock.h"
 #include "CallMemFun.h"
+#include "Thread.h"
 #include <queue>
 #include <functional>
-#include <pthread.h>
 #include <iostream>
 using namespace std;
 Room::Room()

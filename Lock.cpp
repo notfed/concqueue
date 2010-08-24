@@ -1,5 +1,4 @@
 #include "Lock.h"
-#include <pthread.h>
 Lock::Lock(Mutex& newMutex) 
   : m_Mutex(&newMutex)
 { 

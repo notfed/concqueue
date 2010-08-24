@@ -1,5 +1,4 @@
 #include "Event.h"
-#include <pthread.h>
 
 Event::Event()
 {

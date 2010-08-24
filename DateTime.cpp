@@ -1,5 +1,4 @@
 #include "DateTime.h"
-#include <time.h>
 DateTime DateTime::Now()
 {
   time_t myTime;

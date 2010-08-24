@@ -1,7 +1,6 @@
 #include "Thread.h"
 #include <exception>
 #include <signal.h>
-#include <pthread.h>
 using namespace std;
 
 Thread::Thread(Start_routine_f start_routine, Start_routine_arg_t arg)
