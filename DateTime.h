@@ -21,13 +21,14 @@ public:
                         difftime(this->ToTimeT(),
                         minuend.ToTimeT())), 0); 
   }
-  inline friend bool operator< (DateTime& left, DateTime& right) 
+  inline friend bool operator< (const DateTime& left, const DateTime& right) 
   { return (difftime(left,right) < 0); }
-  inline friend bool operator<= (DateTime& left, DateTime& right) 
+  inline friend bool operator<= (const DateTime& left, const DateTime& right) 
   { return left==right || left<right; }
-  inline friend bool operator>= (DateTime& left, DateTime& right) 
+  inline friend bool operator>= (const DateTime& left, const DateTime& right) 
   { return left==right || left>right; }
-  inline friend bool operator> (DateTime& left, DateTime& right) { return !(left<right); }
+  inline friend bool operator> (const DateTime& left, const DateTime& right) 
+  { return !(left<right); }
       
 };
 #endif
