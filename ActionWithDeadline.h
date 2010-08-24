@@ -7,12 +7,12 @@ template <class A> class ActionWithDeadline_ptr_cmp;
 template <class A>
 class ActionWithDeadline
 {
-  const A& m_Action;
   DateTime m_Deadline;
 public:
   typedef ActionWithDeadline_ptr_cmp<A> PtrCompareType;
   const DateTime& Deadline() const { return m_Deadline; }
-  ActionWithDeadline(const A& action, const DateTime& deadline);
+  ActionWithDeadline(const DateTime& deadline);
+  virtual void operator()() = 0;
 };
 
 template <class A>
@@ -28,10 +28,8 @@ public:
 };
 
 template <class A>
-ActionWithDeadline<A>::ActionWithDeadline(const A& action, const DateTime& deadline) 
-    : m_Action(action),
-      m_Deadline(deadline)
+ActionWithDeadline<A>::ActionWithDeadline(const DateTime& deadline) 
+      : m_Deadline(deadline)
 { }
-
 
 #endif
