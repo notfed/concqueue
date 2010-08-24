@@ -1,5 +1,6 @@
 #include "Mutex.h"
 #include <stdexcept>
+#include <iostream>
 
 Mutex::Mutex()
 {
@@ -10,7 +11,7 @@ Mutex::Mutex()
 Mutex::~Mutex()
 {
   if(pthread_mutex_destroy(&m_Mutex)!=0)
-    throw std::runtime_error("pthread_mutex_destroy failed");
+    std::cerr << "pthread_mutex_destroy failed" << std::endl;
 }
 
 void Mutex::Lock()

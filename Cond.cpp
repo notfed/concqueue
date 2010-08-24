@@ -2,6 +2,7 @@
 #include "Mutex.h"
 #include "DateTime.h"
 #include <stdexcept>
+#include <iostream>
 
 
 Cond::Cond()
@@ -12,7 +13,7 @@ Cond::Cond()
 Cond::~Cond()
 {
   if(pthread_cond_destroy(&m_Cond)!=0)
-    throw std::runtime_error("pthread_cond_destroy failed"); 
+    std::cerr << "pthread_cond_destroy failed" << std::endl; 
 }
 Cond::operator pthread_cond_t*() 
 { 
