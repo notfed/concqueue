@@ -13,7 +13,7 @@
 #include <functional>
 using namespace std;
 
-template <class E>
+template <class E> // where E : ActionWithDeadline
 class ActionQueue
 {
   volatile bool m_Finished;
