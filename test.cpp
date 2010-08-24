@@ -1,12 +1,12 @@
-#include "Room.h"
 #include "Person.h"
+#include "ThreadQueue.h"
 #include "DateTime.h"
 #include <pthread.h>
 #include <iostream>
 using namespace std;
 int main()
 {
-  Room myRoom;
+  ThreadQueue<Person> q;
   DateTime now(DateTime::Now());
   Person a("aaron", now+TimeSpan(1,0));
   Person b("bob", now+TimeSpan(2,0));
@@ -16,15 +16,15 @@ int main()
   Person f("frank", now+TimeSpan(6,0));
   Person g("greg", now+TimeSpan(7,0));
   Person h("han", now+TimeSpan(8,0));
-  myRoom.Enqueue(&h);
-  myRoom.Enqueue(&e);
-  myRoom.Enqueue(&a);
-  myRoom.Enqueue(&c);
-  myRoom.Enqueue(&d);
-  myRoom.Enqueue(&f);
-  myRoom.Enqueue(&b);
-  myRoom.Enqueue(&g);
-  myRoom.Finish();
-  myRoom.Wait();
+  q.Enqueue(&h);
+  q.Enqueue(&e);
+  q.Enqueue(&a);
+  q.Enqueue(&c);
+  q.Enqueue(&d);
+  q.Enqueue(&f);
+  q.Enqueue(&b);
+  q.Enqueue(&g);
+  q.Finish();
+  q.Wait();
   return 0;
 }
