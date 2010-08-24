@@ -1,6 +1,6 @@
 #ifndef TIMESPAN_H
 #define TIMESPAN_H
-#include <time.h>
+#include <ctime>
 #include <ostream>
 typedef struct timespec timespec_t;
 class TimeSpan;
