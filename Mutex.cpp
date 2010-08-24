@@ -2,12 +2,14 @@
 
 Mutex::Mutex()
 {
-  pthread_mutex_init(&m_Mutex,0);
+  if(pthread_mutex_init(&m_Mutex,0)!=0)
+    throw "Couldn't initialize Mutex";
 }
 
 Mutex::~Mutex()
 {
-  pthread_mutex_destroy(&m_Mutex);
+  if(pthread_mutex_destroy(&m_Mutex)!=0)
+    throw "Couldn't destroy Mutex";
 }
 
 void Mutex::Lock()

@@ -5,11 +5,13 @@
 
 Cond::Cond()
 {
-  pthread_cond_init(&m_Cond,0); 
+  if(pthread_cond_init(&m_Cond,0)!=0)
+    throw "Couldn't initialize Cond"; 
 }
 Cond::~Cond()
 {
-  pthread_cond_destroy(&m_Cond); 
+  if(pthread_cond_destroy(&m_Cond)!=0)
+    throw "Couldn't destroy Cond"; 
 }
 Cond::operator pthread_cond_t*() 
 { 
