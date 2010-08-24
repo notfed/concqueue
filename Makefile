@@ -1,9 +1,11 @@
 LD=g++ -lpthread -Wall
 CC=g++ -Wall
-test : test.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
-	$(LD) -o test test.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
-test.o : test.cpp
-	$(CC) -c test.cpp 
+try : try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
+	$(LD) -o try try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
+test : try
+	valgrind --tool=helgrind ./try
+try.o : try.cpp
+	$(CC) -c try.cpp 
 Lock.o : Lock.cpp Lock.h Mutex.h
 	$(CC) -c Lock.cpp 
 Mutex.o : Mutex.cpp Mutex.h
@@ -25,4 +27,4 @@ ScheduledMessage.o : ScheduledMessage.cpp ScheduledMessage.h
 ActionWithDeadline.o : ActionWithDeadline.cpp ActionWithDeadline.h
 	$(CC) -c ActionWithDeadline.cpp
 clean :
-	rm -f test *.o
+	rm -f try *.o
