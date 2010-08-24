@@ -1,12 +1,12 @@
 #include "ScheduledMessage.h"
-#include "ThreadQueue.h"
+#include "ActionQueue.h"
 #include "DateTime.h"
 #include <pthread.h>
 #include <iostream>
 using namespace std;
 int main()
 {
-  ThreadQueue<ScheduledMessage> q;
+  ActionQueue<ScheduledMessage> q;
   DateTime now(DateTime::Now());
   ScheduledMessage a("Hi, I'm aaron", now+TimeSpan(1,0));
   ScheduledMessage b("Hi, I'm bob", now+TimeSpan(2,0));

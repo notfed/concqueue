@@ -14,7 +14,7 @@
 using namespace std;
 
 template <class E>
-class ThreadQueue
+class ActionQueue
 {
   volatile bool m_Finished;
   Thread m_Thread;
@@ -23,28 +23,28 @@ class ThreadQueue
   Event m_QueueEvent;
   E* Dequeue();
   E* TryDequeue(TimeSpan*);
-  void* ThreadQueueLoop();
+  void* ActionQueueLoop();
 public:
-  ThreadQueue();
-  virtual ~ThreadQueue();
+  ActionQueue();
+  virtual ~ActionQueue();
   void Enqueue(E*); // Add a element to the queue
   void Finish(); // Signal that no more people will be Enqueued
   void Wait(); // Wait for room to finish handling all people currently queued
 };
 
 template <class E>
-ThreadQueue<E>::ThreadQueue()
+ActionQueue<E>::ActionQueue()
   : m_Finished(false),
-    m_Thread(&CallMemFun<ThreadQueue<E>,&ThreadQueue<E>::ThreadQueueLoop>,this)
+    m_Thread(&CallMemFun<ActionQueue<E>,&ActionQueue<E>::ActionQueueLoop>,this)
 {
 }
 template <class E>
-ThreadQueue<E>::~ThreadQueue()
+ActionQueue<E>::~ActionQueue()
 {
   m_Thread.Cancel();
 }
 template <class E>
-void* ThreadQueue<E>::ThreadQueueLoop()
+void* ActionQueue<E>::ActionQueueLoop()
 {
   for(;;)
   {
@@ -70,14 +70,14 @@ void* ThreadQueue<E>::ThreadQueueLoop()
   return this;
 }
 template <class E>
-void ThreadQueue<E>::Enqueue(E* newElement)
+void ActionQueue<E>::Enqueue(E* newElement)
 {
   Lock queueLock(m_QueueLock);
   m_Queue.push(newElement);
   m_QueueEvent.Signal();
 }
 template <class E>
-E* ThreadQueue<E>::TryDequeue(TimeSpan* ETA)
+E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 {
   Lock queueLock(m_QueueLock);
   *ETA = TimeSpan(0,0);
@@ -90,7 +90,7 @@ E* ThreadQueue<E>::TryDequeue(TimeSpan* ETA)
   return nextElement;
 }
 template <class E>
-E* ThreadQueue<E>::Dequeue()
+E* ActionQueue<E>::Dequeue()
 {
   Lock queueLock(m_QueueLock);
   if(m_Queue.empty()) return 0;
@@ -99,12 +99,12 @@ E* ThreadQueue<E>::Dequeue()
   return nextElement;
 }
 template <class E>
-void ThreadQueue<E>::Finish()
+void ActionQueue<E>::Finish()
 {
   m_Finished = true;
 }
 template <class E>
-void ThreadQueue<E>::Wait()
+void ActionQueue<E>::Wait()
 {
   void *result;
   m_Thread.Join(&result);
