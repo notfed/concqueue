@@ -16,23 +16,24 @@ public:
   inline operator timespec_t() const { timespec_t tmpTime = {ToTimeT(),0}; return tmpTime; }
   time_t ToTimeT() const { return timegm(&m_AbsTime); }
   DateTime operator+(const TimeSpan& addend);
-  inline TimeSpan operator-(const DateTime& minuend) 
-  { return TimeSpan(static_cast<int>(
-                        difftime(this->ToTimeT(),
-                        minuend.ToTimeT())), 0); 
-  }
-  friend bool operator< (const DateTime& left, const DateTime& right);
-  friend bool operator<= (const DateTime& left, const DateTime& right); 
-  friend bool operator>= (const DateTime& left, const DateTime& right); 
-  friend bool operator> (const DateTime& left, const DateTime& right); 
+  TimeSpan operator-(const DateTime& minuend);
+  bool operator< (const DateTime& right);
+  bool operator<= (const DateTime& right); 
+  bool operator>= (const DateTime& right); 
+  bool operator> (const DateTime& right); 
       
 };
-inline bool operator< (const DateTime& left, const DateTime& right) 
-{ return (difftime(left,right) < 0); }
-inline bool operator<= (const DateTime& left, const DateTime& right) 
-{ return left==right || left<right; }
-inline bool operator>= (const DateTime& left, const DateTime& right) 
-{ return left==right || left>right; }
-inline bool operator> (const DateTime& left, const DateTime& right) 
-{ return !(left<right); }
+inline TimeSpan DateTime::operator-(const DateTime& minuend) 
+{ return TimeSpan(static_cast<int>(
+                        difftime(this->ToTimeT(),
+                        minuend.ToTimeT())), 0); 
+}
+inline bool DateTime::operator< (const DateTime& right) 
+{ return (difftime(*this,right) < 0); }
+inline bool DateTime::operator<= (const DateTime& right) 
+{ return *this==right || *this<right; }
+inline bool DateTime::operator>= (const DateTime& right) 
+{ return *this==right || *this>right; }
+inline bool DateTime::operator> (const DateTime& right) 
+{ return !(*this<right); }
 #endif
