@@ -1,7 +1,7 @@
 #include "Person.h"
 #include "Room.h"
 #include "Lock.h"
-#include "MemFun.h"
+#include "CallMemFun.h"
 #include <queue>
 #include <functional>
 #include <pthread.h>

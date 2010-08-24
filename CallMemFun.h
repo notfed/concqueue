@@ -1,5 +1,5 @@
-#ifndef MEMFUN_H
-#define MEMFUN_H
+#ifndef CALLMEMFUN_H
+#define CALLMEMFUN_H
 template <class T, void* (T::*M)()>
 void* CallMemFun(void* _this)
 {
