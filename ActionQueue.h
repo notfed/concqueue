@@ -28,8 +28,8 @@ public:
   ActionQueue();
   virtual ~ActionQueue();
   void Enqueue(E*); // Add an element to the queue
-  void Finish(); // Signal that no more people will be Enqueued
-  void Wait(); // Wait for room to finish handling all people currently queued
+  void Finish(); // Signal that no more elements will be Enqueued
+  void Wait(); // Wait for queue to finish handling all elements currently queued
 };
 
 template <class E>
