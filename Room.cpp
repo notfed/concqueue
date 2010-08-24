@@ -26,14 +26,14 @@ void* Room::RoomLoop()
     if(ptrPerson==0) { // Queue Is Empty
       if(m_Finished) return this;
       //cout << "Queue is empty, waiting for entries." << endl;
-      m_PersonInQueue.Wait();
+      m_QueueEvent.Wait();
       continue; 
     }
     //cout << "Next person ready in " << ETA.Seconds() << " seconds. " << endl;
     if(ETA > TimeSpan::Zero) // Top element not ready
     {
       //cout << "Waiting for " << ETA.Seconds() << " seconds. " << endl;
-      m_PersonInQueue.Wait(ptrPerson->Deadline());
+      m_QueueEvent.Wait(ptrPerson->Deadline());
       continue;
     }
     //cout << "Element ready. Executing. " << endl;
@@ -46,7 +46,7 @@ void Room::Enqueue(Person* newPerson)
 {
   Lock queueLock(m_QueueLock);
   m_Queue.push(newPerson);
-  m_PersonInQueue.Signal();
+  m_QueueEvent.Signal();
 }
 Person* Room::TryDequeue(TimeSpan* ETA)
 {

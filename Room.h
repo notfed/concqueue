@@ -15,7 +15,7 @@ class Room
   Thread m_Thread;
   std::priority_queue<Person*,std::vector<Person*>,Person_ptr_cmp> m_Queue;
   Mutex m_QueueLock;
-  Event m_PersonInQueue;
+  Event m_QueueEvent;
   Person* Dequeue();
   Person* TryDequeue(TimeSpan*);
   void* RoomLoop();
