@@ -1,6 +1,6 @@
 #include "Thread.h"
 #include "Attr.h"
-#include <exception>
+#include <stdexcept>
 #include <signal.h>
 using namespace std;
 
@@ -8,7 +8,7 @@ Thread::Thread(Start_routine_f start_routine, Start_routine_arg_t arg)
 {
   Attr at(PTHREAD_CREATE_JOINABLE);
   if(pthread_create(&m_Thread, at, start_routine, arg)!=0) 
-    throw "pthread_create failed";
+    throw std::runtime_error("pthread_create failed");
 }
 int Thread::Cancel()
 {

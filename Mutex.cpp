@@ -1,15 +1,16 @@
 #include "Mutex.h"
+#include <stdexcept>
 
 Mutex::Mutex()
 {
   if(pthread_mutex_init(&m_Mutex,0)!=0)
-    throw "Couldn't initialize Mutex";
+    throw std::runtime_error("pthread_mutex_init failed");
 }
 
 Mutex::~Mutex()
 {
   if(pthread_mutex_destroy(&m_Mutex)!=0)
-    throw "Couldn't destroy Mutex";
+    throw std::runtime_error("pthread_mutex_destroy failed");
 }
 
 void Mutex::Lock()
