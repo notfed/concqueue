@@ -1,7 +1,6 @@
 #include "ScheduledMessage.h"
 #include "ActionQueue.h"
 #include "DateTime.h"
-#include <pthread.h>
 #include <iostream>
 using namespace std;
 int main()
