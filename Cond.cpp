@@ -2,6 +2,20 @@
 #include "Mutex.h"
 #include "DateTime.h"
 
+
+Cond::Cond()
+{
+  pthread_cond_init(&m_Cond,0); 
+}
+Cond::~Cond()
+{
+  pthread_cond_destroy(&m_Cond); 
+}
+Cond::operator pthread_cond_t*() 
+{ 
+  return &m_Cond; 
+}
+
 int Cond::TimedWait(Mutex& mutex, const DateTime& tim)
 {
   struct timespec tmpTime(tim);
