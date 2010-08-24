@@ -52,7 +52,10 @@ void* ActionQueue<E>::ActionQueueLoop()
     TimeSpan ETA(0,0);
     ptrElement = TryDequeue(&ETA);
     if(ptrElement==0) { // Queue Is Empty
-      if(m_Finished) return this;
+      if(m_Finished) {
+        //cout << "Queue is empty, finished." << endl;
+        return this;
+      }
       //cout << "Queue is empty, waiting for entries." << endl;
       m_QueueEvent.Wait();
       continue; 
