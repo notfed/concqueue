@@ -1,11 +1,9 @@
 LD=g++ -lpthread -Wall
 CC=g++ -Wall
-test : test.o Person.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o
-	$(LD) -o test test.o Person.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o
+test : test.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o
+	$(LD) -o test test.o Lock.o Mutex.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o
 test.o : test.cpp
 	$(CC) -c test.cpp 
-Person.o : Person.cpp Person.h
-	$(CC) -c Person.cpp 
 Lock.o : Lock.cpp Lock.h Mutex.h
 	$(CC) -c Lock.cpp 
 Mutex.o : Mutex.cpp Mutex.h
