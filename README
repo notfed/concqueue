@@ -28,10 +28,10 @@ Attr
  - Represents a thread attribute
 
 Cond
- - Represents a waitable condition
+ - Represents a condition variable
 
 Mutex
- - Represents a mutually exclusive lock
+ - Represents a mutually exclusive (lockable) object
 
 Lock
  - Use to exclusively lock a Mutex
