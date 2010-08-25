@@ -1,25 +1,26 @@
 #ifndef LOCK_H
 #define LOCK_H
+#include "Semaphore.h"
 template <class T>
 class Lock
 {
-  T m_Lock;
+  T& m_Sem;
 public:  
-  Lock(T);
+  Lock(T&);
   virtual ~Lock();
 };
 
 template <class T>
-Lock<T>::Lock(T newLock) 
-  : m_Lock(newLock)
+Lock<T>::Lock(T& newSem) 
+  : m_Sem(newSem)
 { 
-  m_Lock.Lock();
+  m_Sem.Lock();
 }
 
 template <class T>
 Lock<T>::~Lock()
 {
-  m_Lock.Unlock();
+  m_Sem.Unlock();
 }
 
 #endif
