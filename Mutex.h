@@ -3,7 +3,8 @@
 #include <pthread.h>
 class Mutex
 {
-  pthread_mutex_t m_Mutex;
+  pthread_mutex_t* m_Mutex;
+  const pthread_t m_Owner;
 public:
   Mutex();
   virtual ~Mutex();
