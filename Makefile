@@ -1,9 +1,13 @@
-LD=g++ -lpthread -Wall
-CC=g++ -Wall
+LD=g++ -g -lpthread -Wall
+CC=g++ -g -Wall
 try : try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o
 	$(LD) -o try try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o
+helgrind-fast : try
+	valgrind --tool=helgrind ./try
 helgrind : try
 	valgrind --tool=helgrind --read-var-info=yes ./try
+drd : try
+	valgrind --tool=drd ./try
 memcheck : try
 	valgrind --tool=memcheck --track-origins=yes --read-var-info=yes ./try
 try.o : try.cpp
