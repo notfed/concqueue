@@ -3,7 +3,7 @@ CC=g++ -Wall
 try : try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
 	$(LD) -o try try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
 test : try
-	valgrind --tool=helgrind ./try
+	valgrind --tool=helgrind --read-var-info=yes ./try
 try.o : try.cpp
 	$(CC) -c try.cpp 
 Lock.o : Lock.cpp Lock.h Mutex.h
