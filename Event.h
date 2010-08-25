@@ -8,8 +8,7 @@ class Event
   Cond m_Cond;
   Mutex m_Mutex;
 public:
-  Event();
-  virtual ~Event();
+  virtual ~Event() { }
   int Signal();
   int Broadcast();
   int Wait();
