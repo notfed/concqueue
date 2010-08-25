@@ -1,11 +1,25 @@
 #ifndef LOCK_H
 #define LOCK_H
-#include "Mutex.h"
+template <class T>
 class Lock
 {
-  Mutex& m_Mutex;
+  T& m_Lock;
 public:  
-  Lock(Mutex&);
+  Lock(T);
   virtual ~Lock();
 };
+
+template <class T>
+Lock<T>::Lock(T newLock) 
+  : m_Lock(newLock)
+{ 
+  m_Lock.Lock();
+}
+
+template <class T>
+Lock<T>::~Lock()
+{
+  m_Lock.Unlock();
+}
+
 #endif

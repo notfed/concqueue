@@ -1,6 +1,6 @@
 #ifndef ACTIONQUEUE_H
 #define ACTIONQUEUE_H
-#include "Mutex.h"
+#include "Semaphore.h"
 #include "Thread.h"
 #include "Event.h"
 #include "DateTime.h"
@@ -19,7 +19,7 @@ class ActionQueue
   volatile bool m_Finished;
   Thread m_Thread;
   std::priority_queue<E*,std::vector<E*>,typename E::PtrCompareType> m_Queue;
-  Mutex m_QueueLock;
+  Semaphore m_QueueLock;
   Event m_QueueEvent;
   E* Dequeue();
   E* TryDequeue(TimeSpan*);
@@ -75,14 +75,14 @@ void* ActionQueue<E>::ActionQueueLoop()
 template <class E>
 void ActionQueue<E>::Enqueue(E* newElement)
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   m_Queue.push(newElement);
   m_QueueEvent.Signal();
 }
 template <class E>
 E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   *ETA = TimeSpan(0,0);
   if(m_Queue.empty()) return 0;
   E* nextElement = m_Queue.top();
@@ -95,7 +95,7 @@ E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 template <class E>
 E* ActionQueue<E>::Dequeue()
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   if(m_Queue.empty()) return 0;
   E* nextElement = m_Queue.top();
   m_Queue.pop();
@@ -109,8 +109,7 @@ void ActionQueue<E>::Finish()
 template <class E>
 void ActionQueue<E>::Wait()
 {
-  void *result;
-  m_Thread.Join(&result);
+  m_Thread.Join();
 }
 
 #endif
