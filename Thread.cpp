@@ -18,6 +18,10 @@ int Thread::Kill(int sig)
 {
   return pthread_kill(m_Thread,sig);
 }
+int Thread::Join()
+{
+  return pthread_join(m_Thread, 0);
+}
 int Thread::Join(void** value_ptr)
 {
   return pthread_join(m_Thread, value_ptr);

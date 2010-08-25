@@ -12,6 +12,7 @@ public:
   virtual ~Thread() { }
   int Cancel();
   int Kill(int);
+  int Join();
   int Join(void**);
 };
 #endif

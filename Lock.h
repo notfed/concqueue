@@ -3,7 +3,7 @@
 template <class T>
 class Lock
 {
-  T& m_Lock;
+  T m_Lock;
 public:  
   Lock(T);
   virtual ~Lock();
