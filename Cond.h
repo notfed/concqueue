@@ -5,7 +5,8 @@
 #include "Mutex.h"
 class Cond
 {
-  pthread_cond_t m_Cond;
+  pthread_cond_t* m_Cond;
+  const pthread_t m_Owner;
 public:
   Cond();
   virtual ~Cond();
