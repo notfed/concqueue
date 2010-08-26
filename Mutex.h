@@ -10,6 +10,6 @@ public:
   virtual ~Mutex();
   void Lock();
   void Unlock();
-  operator pthread_mutex_t*();
+  operator pthread_mutex_t* const();
 };
 #endif

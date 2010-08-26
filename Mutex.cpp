@@ -33,7 +33,7 @@ void Mutex::Unlock()
     throw std::runtime_error("pthread_mutex_unlock failed");
 }
 
-Mutex::operator pthread_mutex_t*()
+Mutex::operator pthread_mutex_t* const()
 {
   return m_Mutex;
 }

@@ -22,7 +22,7 @@ Cond::~Cond()
     delete m_Cond;
   }
 }
-Cond::operator pthread_cond_t*() 
+Cond::operator pthread_cond_t* const() 
 { 
   return m_Cond; 
 }

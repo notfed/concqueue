@@ -14,6 +14,6 @@ public:
   int TimedWait(Mutex&,const DateTime&);
   int Broadcast();
   int Signal();
-  operator pthread_cond_t*();
+  operator pthread_cond_t* const();
 };
 #endif
