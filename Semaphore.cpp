@@ -1,13 +1,18 @@
 #include "Semaphore.h"
 #include <stdexcept>
 #include <errno.h>
+#include <iostream>
+
 Semaphore::Semaphore(bool pshared,int initial)
-  : m_Owner(pthread_self())
+  : m_Owner(pthread_self()),
+    m_Sem(new sem_t())
 {
-  m_Sem = new sem_t();
+  if(m_Sem==0)
+    throw std::runtime_error("Semaphore constructor error: m_Sem == 0");
   if(sem_init(m_Sem,(pshared?1:0),initial)==-1)
     throw std::runtime_error("sem_init failed");
 }
+
 Semaphore::~Semaphore()
 {
   if(pthread_equal(m_Owner,pthread_self())) 
@@ -16,8 +21,11 @@ Semaphore::~Semaphore()
     delete m_Sem;
   }
 }
-void Semaphore::Lock()
+void Semaphore::lock()
 {
+  if(m_Sem==0)
+    throw std::runtime_error("Semaphore::lock error: m_Sem == 0");
+
   int rc;
   for(;;){
     rc = sem_wait(m_Sem); 
@@ -26,7 +34,7 @@ void Semaphore::Lock()
     throw std::runtime_error("sem_wait failed");
   }
 }
-void Semaphore::Unlock()
+void Semaphore::unlock()
 {
   if(sem_post(m_Sem)!=0)
     throw std::runtime_error("sem_post failed");

@@ -8,8 +8,8 @@ class Mutex
 public:
   Mutex();
   virtual ~Mutex();
-  void Lock();
-  void Unlock();
+  void lock();
+  void unlock();
   operator pthread_mutex_t* const();
 };
 #endif

@@ -14,13 +14,13 @@ template <class T>
 Lock<T>::Lock(T& newSem) 
   : m_Sem(newSem)
 { 
-  m_Sem.Lock();
+  m_Sem.lock();
 }
 
 template <class T>
 Lock<T>::~Lock()
 {
-  m_Sem.Unlock();
+  m_Sem.unlock();
 }
 
 #endif

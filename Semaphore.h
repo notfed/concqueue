@@ -4,12 +4,12 @@
 #include <pthread.h>
 class Semaphore
 {
-  sem_t *m_Sem;
   const pthread_t m_Owner;
+  sem_t *m_Sem;
 public:
   Semaphore(bool pshared=false,int initial=1);
   ~Semaphore();
-  void Lock();
-  void Unlock();
+  void lock();
+  void unlock();
 };
 #endif

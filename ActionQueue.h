@@ -20,6 +20,7 @@ class ActionQueue
   Thread m_Thread;
   std::priority_queue<E*,std::vector<E*>,typename E::PtrCompareType> m_Queue;
   Semaphore m_QueueLock;
+  Semaphore m_FinishedLock;
   Event m_QueueEvent;
   E* Dequeue();
   E* TryDequeue(TimeSpan*);
@@ -29,6 +30,7 @@ public:
   virtual ~ActionQueue();
   void Enqueue(E*); // Add an element to the queue
   void Finish(); // Signal that no more elements will be Enqueued
+  bool Finished(); // Check whether Finish has been called
   void Wait(); // Wait for queue to finish handling all elements currently queued
 };
 
@@ -50,9 +52,12 @@ void* ActionQueue<E>::ActionQueueLoop()
   {
     E* ptrElement;
     TimeSpan ETA(0,0);
-    ptrElement = TryDequeue(&ETA);
+    {
+      Lock<Semaphore> qlock(m_QueueLock);
+      ptrElement = TryDequeue(&ETA);
+    }
     if(ptrElement==0) { // Queue Is Empty
-      if(m_Finished) {
+      if(Finished()) {
         //cout << "Queue is empty, finished." << endl;
         break;
       }
@@ -82,7 +87,6 @@ void ActionQueue<E>::Enqueue(E* newElement)
 template <class E>
 E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 {
-  Lock<Semaphore> queueLock(m_QueueLock);
   *ETA = TimeSpan(0,0);
   if(m_Queue.empty()) return 0;
   E* nextElement = m_Queue.top();
@@ -104,7 +108,14 @@ E* ActionQueue<E>::Dequeue()
 template <class E>
 void ActionQueue<E>::Finish()
 {
+  Lock<Semaphore> g(m_FinishedLock);
   m_Finished = true;
+}
+template <class E>
+bool ActionQueue<E>::Finished()
+{
+  Lock<Semaphore> g(m_FinishedLock);
+  return m_Finished == true;
 }
 template <class E>
 void ActionQueue<E>::Wait()
