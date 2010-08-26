@@ -4,8 +4,7 @@
 #include <iostream>
 
 Semaphore::Semaphore(bool pshared,int initial)
-  : m_Owner(pthread_self()),
-    m_Sem(new sem_t())
+   : m_Sem(new sem_t())
 {
   if(m_Sem==0)
     throw std::runtime_error("Semaphore constructor error: m_Sem == 0");
@@ -15,11 +14,8 @@ Semaphore::Semaphore(bool pshared,int initial)
 
 Semaphore::~Semaphore()
 {
-  if(pthread_equal(m_Owner,pthread_self())) 
-  {
     sem_destroy(m_Sem);
     delete m_Sem;
-  }
 }
 void Semaphore::lock()
 {
