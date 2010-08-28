@@ -58,10 +58,7 @@ void* ActionQueue<E>::ActionQueueLoop()
   {
     E* ptrElement;
     TimeSpan ETA(0,0);
-    {
-      Lock<Semaphore> qlock(this->m_QueueLock);
-      ptrElement = TryDequeue(&ETA);
-    }
+    ptrElement = TryDequeue(&ETA);
     if(ptrElement==0) { // Queue Is Empty
       if(Finished()) {
         //cout << "Queue is empty, finished." << endl;
@@ -93,6 +90,7 @@ void ActionQueue<E>::Enqueue(E* newElement)
 template <class E>
 E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 {
+  Lock<Semaphore> queueLock(this->m_QueueLock);
   *ETA = TimeSpan(0,0);
   if(this->m_Queue.empty()) return 0;
   E* nextElement = this->m_Queue.top();
