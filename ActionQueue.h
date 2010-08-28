@@ -30,7 +30,7 @@ class ActionQueue : private ActionQueueBase<E>
   using ActionQueueBase<E>::m_QueueLock;
   using ActionQueueBase<E>::m_QueueEvent;
   using ActionQueueBase<E>::m_Queue;
-  volatile bool m_Finished;
+  bool m_Finished;
   Thread m_Thread;
   E* Dequeue();
   E* TryDequeue(TimeSpan*);
