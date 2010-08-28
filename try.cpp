@@ -6,7 +6,7 @@
 using namespace std;
 int main()
 {
-  auto_ptr< ActionQueue<ScheduledMessage> > q(new ActionQueue<ScheduledMessage>());
+  ActionQueue<ScheduledMessage> q;
   DateTime now(DateTime::Now());
   ScheduledMessage a("Hi, I'm aaron", now+TimeSpan(1,0));
   ScheduledMessage b("Hi, I'm bob", now+TimeSpan(2,0));
@@ -16,15 +16,15 @@ int main()
   ScheduledMessage f("Hi, I'm frank", now+TimeSpan(6,0));
   ScheduledMessage g("Hi, I'm greg", now+TimeSpan(7,0));
   ScheduledMessage h("Hi, I'm han", now+TimeSpan(8,0));
-  q->Enqueue(&h);
-  q->Enqueue(&e);
-  q->Enqueue(&a);
-  q->Enqueue(&c);
-  q->Enqueue(&d);
-  q->Enqueue(&f);
-  q->Enqueue(&b);
-  q->Enqueue(&g);
-  q->Finish();
-  q->Wait();
+  q.Enqueue(&h);
+  q.Enqueue(&e);
+  q.Enqueue(&a);
+  q.Enqueue(&c);
+  q.Enqueue(&d);
+  q.Enqueue(&f);
+  q.Enqueue(&b);
+  q.Enqueue(&g);
+  q.Finish();
+  q.Wait();
   return 0;
 }
