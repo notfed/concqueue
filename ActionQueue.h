@@ -116,13 +116,13 @@ E* ActionQueue<E>::Dequeue()
 template <class E>
 void ActionQueue<E>::Finish()
 {
-  Lock<Semaphore> g(m_FinishedLock);
+  Lock<Semaphore> finishLock(m_FinishedLock);
   m_Finished = true;
 }
 template <class E>
 bool ActionQueue<E>::Finished()
 {
-  Lock<Semaphore> g(m_FinishedLock);
+  Lock<Semaphore> finishLock(m_FinishedLock);
   return m_Finished == true;
 }
 template <class E>
