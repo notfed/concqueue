@@ -1,10 +1,13 @@
 #ifndef THREAD_H
 #define THREAD_H
 #include <pthread.h>
+#include "Mutex.h"
 class Thread
 {
   pthread_t m_Thread;
   void Exit(void*);
+  bool m_IsDone;
+  Mutex m_StateLock;
 public:
   typedef void* (*Start_routine_f)(void*);
   typedef void* Start_routine_arg_t;
