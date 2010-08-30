@@ -1,5 +1,5 @@
-LD=g++ -g -fno-inline -O1 -lpthread -Wall
-CC=g++ -g -fno-inline -O1 -Wall
+LD=g++ -lpthread -Wall
+CC=g++ -Wall
 try : try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o MutexAttr.o
 	$(LD) -o try try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o MutexAttr.o
 helgrind-fast : try
