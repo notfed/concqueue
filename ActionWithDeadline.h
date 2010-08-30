@@ -1,7 +1,6 @@
 #ifndef ACTIONWITHDEADLINE_H
 #define ACTIONWITHDEADLINE_H 
 #include "DateTime.h"
-#include <string>
 class ActionWithDeadline
 {
   DateTime m_Deadline;

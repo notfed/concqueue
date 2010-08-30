@@ -7,7 +7,7 @@ DateTime DateTime::Now()
   gmtime_r(&myTime,&myTm);
   return DateTime(myTm);
 }
-DateTime DateTime::operator+(const TimeSpan& addend) const
+DateTime DateTime::operator+(TimeSpan addend) const
 {
   DateTime newDt(m_AbsTime);
   tm_t oldDt = m_AbsTime;

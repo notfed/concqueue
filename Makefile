@@ -1,13 +1,19 @@
 LD=g++ -lpthread -Wall
 CC=g++ -Wall
-try : try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
-	$(LD) -o try try.o Lock.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o
-test : try
+try : try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o MutexAttr.o
+	$(LD) -o try try.o Mutex.o Cond.o Attr.o Thread.o Event.o DateTime.o TimeSpan.o ScheduledMessage.o ActionWithDeadline.o Semaphore.o MutexAttr.o
+helgrind-fast : try
 	valgrind --tool=helgrind ./try
+helgrind : try
+	valgrind --tool=helgrind --read-var-info=yes ./try
+drd : try
+	valgrind --tool=drd ./try
+memcheck-fast : try
+	valgrind --tool=memcheck --track-origins=yes ./try
+memcheck : try
+	valgrind --tool=memcheck --track-origins=yes --read-var-info=yes ./try
 try.o : try.cpp
 	$(CC) -c try.cpp 
-Lock.o : Lock.cpp Lock.h Mutex.h
-	$(CC) -c Lock.cpp 
 Mutex.o : Mutex.cpp Mutex.h
 	$(CC) -c Mutex.cpp 
 Cond.o : Cond.cpp Cond.h
@@ -26,5 +32,9 @@ ScheduledMessage.o : ScheduledMessage.cpp ScheduledMessage.h
 	$(CC) -c ScheduledMessage.cpp
 ActionWithDeadline.o : ActionWithDeadline.cpp ActionWithDeadline.h
 	$(CC) -c ActionWithDeadline.cpp
+Semaphore.o : Semaphore.cpp Semaphore.h
+	$(CC) -c Semaphore.cpp
+MutexAttr.o : MutexAttr.cpp MutexAttr.h
+	$(CC) -c MutexAttr.cpp
 clean :
 	rm -f try *.o

@@ -1,11 +1,26 @@
 #ifndef LOCK_H
 #define LOCK_H
-#include "Mutex.h"
+#include "Semaphore.h"
+template <class T>
 class Lock
 {
-  Mutex& m_Mutex;
+  T& m_Sem;
 public:  
-  Lock(Mutex&);
+  Lock(T&);
   virtual ~Lock();
 };
+
+template <class T>
+Lock<T>::Lock(T& newSem) 
+  : m_Sem(newSem)
+{ 
+  m_Sem.lock();
+}
+
+template <class T>
+Lock<T>::~Lock()
+{
+  m_Sem.unlock();
+}
+
 #endif

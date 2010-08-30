@@ -1,6 +1,6 @@
 #ifndef ACTIONQUEUE_H
 #define ACTIONQUEUE_H
-#include "Mutex.h"
+#include "Semaphore.h"
 #include "Thread.h"
 #include "Event.h"
 #include "DateTime.h"
@@ -14,21 +14,33 @@
 using namespace std;
 
 template <class E> // where E : ActionWithDeadline
-class ActionQueue
+class ActionQueueBase
 {
-  volatile bool m_Finished;
-  Thread m_Thread;
-  std::priority_queue<E*,std::vector<E*>,typename E::PtrCompareType> m_Queue;
-  Mutex m_QueueLock;
+protected:
+  Semaphore m_QueueLock;
   Event m_QueueEvent;
+  std::priority_queue<E*,std::vector<E*>,typename E::PtrCompareType> m_Queue;
+  Semaphore m_FinishedLock;
+};
+
+template <class E> // where E : ActionWithDeadline
+class ActionQueue : private ActionQueueBase<E>
+{
+  using ActionQueueBase<E>::m_FinishedLock;
+  using ActionQueueBase<E>::m_QueueLock;
+  using ActionQueueBase<E>::m_QueueEvent;
+  using ActionQueueBase<E>::m_Queue;
+  bool m_Finished;
+  Thread m_Thread;
   E* Dequeue();
   E* TryDequeue(TimeSpan*);
   void* ActionQueueLoop();
 public:
-  ActionQueue();
   virtual ~ActionQueue();
+  ActionQueue();
   void Enqueue(E*); // Add an element to the queue
   void Finish(); // Signal that no more elements will be Enqueued
+  bool Finished(); // Check whether Finish has been called
   void Wait(); // Wait for queue to finish handling all elements currently queued
 };
 
@@ -52,7 +64,7 @@ void* ActionQueue<E>::ActionQueueLoop()
     TimeSpan ETA(0,0);
     ptrElement = TryDequeue(&ETA);
     if(ptrElement==0) { // Queue Is Empty
-      if(m_Finished) {
+      if(Finished()) {
         //cout << "Queue is empty, finished." << endl;
         break;
       }
@@ -75,14 +87,14 @@ void* ActionQueue<E>::ActionQueueLoop()
 template <class E>
 void ActionQueue<E>::Enqueue(E* newElement)
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   m_Queue.push(newElement);
   m_QueueEvent.Signal();
 }
 template <class E>
 E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   *ETA = TimeSpan(0,0);
   if(m_Queue.empty()) return 0;
   E* nextElement = m_Queue.top();
@@ -95,7 +107,7 @@ E* ActionQueue<E>::TryDequeue(TimeSpan* ETA)
 template <class E>
 E* ActionQueue<E>::Dequeue()
 {
-  Lock queueLock(m_QueueLock);
+  Lock<Semaphore> queueLock(m_QueueLock);
   if(m_Queue.empty()) return 0;
   E* nextElement = m_Queue.top();
   m_Queue.pop();
@@ -104,13 +116,19 @@ E* ActionQueue<E>::Dequeue()
 template <class E>
 void ActionQueue<E>::Finish()
 {
+  Lock<Semaphore> finishLock(m_FinishedLock);
   m_Finished = true;
+}
+template <class E>
+bool ActionQueue<E>::Finished()
+{
+  Lock<Semaphore> finishLock(m_FinishedLock);
+  return m_Finished == true;
 }
 template <class E>
 void ActionQueue<E>::Wait()
 {
-  void *result;
-  m_Thread.Join(&result);
+  m_Thread.Join();
 }
 
 #endif
