@@ -1,19 +1,17 @@
 #ifndef COND_H
 #define COND_H
 #include <pthread.h>
-#include "DateTime.h"
 #include "Mutex.h"
+#include "DateTime.h"
 class Cond
 {
-  pthread_cond_t* m_Cond;
-  const pthread_t m_Owner;
+  pthread_cond_t m_Cond;
 public:
+  ~Cond();
   Cond();
-  virtual ~Cond();
   int Wait(Mutex&);
-  int TimedWait(Mutex&,const DateTime&);
   int Broadcast();
   int Signal();
-  operator pthread_cond_t* const();
+  int TimedWait(Mutex& mutex, const DateTime& tim);
 };
 #endif
